@@ -3,4 +3,4 @@ let addProductBtn = document.getElementById('addProductBtn')
 getCategories()
 getProducts()
 
-addProductBtn.onclick = addProduct
+document.getElementById('addProductBtn').onclick = addProduct

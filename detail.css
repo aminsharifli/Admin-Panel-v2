@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f3f6fb;
+    color: #0f172a;
+}
+
+.detail-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.detail-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height: 650px;
+}
+
+.detail-left {
+    background: linear-gradient(180deg, #eff6ff, #f8fbff);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-left img {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    object-fit: contain;
+    border-radius: 18px;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+}
+
+.detail-right {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.category-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.back-btn {
+    border: none;
+    background: #0f172a;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    opacity: 0.9;
+}
+
+.product-title {
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 18px;
+    color: #0f172a;
+}
+
+.product-price {
+    font-size: 34px;
+    font-weight: 700;
+    color: #16a34a;
+    margin-bottom: 26px;
+}
+
+.info-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.info-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.info-card span {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.info-card h4 {
+    font-size: 20px;
+    color: #0f172a;
+}
+
+.desc-box {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+}
+
+.desc-box h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #0f172a;
+}
+
+.desc-box p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+}

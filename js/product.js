@@ -9,7 +9,11 @@ let drawerPrice = document.getElementById('drawerPrice')
 let drawerStock = document.getElementById('drawerStock')
 let drawerId = document.getElementById('drawerId')
 
+let srchinput = document.getElementById('srchinput')
+let srccardlist = document.getElementById('srccardlist')
+
 let data = []
+let secilenCategory = 'Hamısı'
 
 function getProducts() {
     fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
@@ -23,7 +27,7 @@ function getProducts() {
 
 function renderProduct(arr) {
     listcontainer.innerHTML = arr.map(item =>
-        `<div class="table-row" onclick="showDetail('${item.id}')">
+        `<div class="table-row" onclick="getDetail('${item.id}')">
             <div><img src="${item.photo}" alt=""></div>
             <div>${item.name}</div>
             <div>${item.category}</div>
@@ -37,51 +41,103 @@ function renderProduct(arr) {
 }
 
 function filtrProduct(name, btn) {
-    let butonlar = catlist.querySelectorAll('.category-btn')
+    secilenCategory = name
+
+    let butonlar = document.querySelectorAll('.category-btn')
+
     for (let i = 0; i < butonlar.length; i++) {
         butonlar[i].classList.remove('active')
     }
 
-    btn.classList.add('active')
+    if (btn) {
+        btn.classList.add('active')
+    }
 
-    let filterdata = name === 'Hamısı' ? data : data.filter(item => item.category === name)
+    let axtarisSozu = srchinput.value.toLowerCase()
+
+    let filterdata = data.filter(item => {
+        let categoryUyur = name === 'Hamısı' ? true : item.category === name
+        let searchUyur = item.name.toLowerCase().includes(axtarisSozu)
+
+        return categoryUyur && searchUyur
+    })
+
     renderProduct(filterdata)
+    SrcCardData(filterdata)
+
+    axtarisSozu === '' ? srccardlist.style.display = 'none' : srccardlist.style.display = 'block'
+}
+
+srchinput.addEventListener('input', function (e) {
+    let keyword = e.target.value.toLowerCase()
+
+    let filterdata = data.filter(item => {
+        let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
+        let searchUyur = item.name.toLowerCase().includes(keyword)
+
+        return categoryUyur && searchUyur
+    })
+
+    renderProduct(filterdata)
+    SrcCardData(filterdata)
+
+    e.target.value === '' ? srccardlist.style.display = 'none' : srccardlist.style.display = 'block'
+})
+
+function SrcCardData(arr) {
+    srccardlist.innerHTML = arr.map(item =>
+        `<div onclick="srcGetDetail('${item.id}')" class="srchcards">
+            <img src="${item.photo}" class="srcimg" alt="">
+            <div class="src-text">
+                <h5>${item.name}</h5>
+                <p>${item.price} AZN</p>
+            </div>
+        </div>`
+    ).join('')
+
+    if (arr.length === 0) {
+        srccardlist.innerHTML = `<div class="notfound">Məhsul tapılmadı</div>`
+    }
+}
+
+function srcGetDetail(id) {
+    window.location.href = `detail.htm?id=${id}`
+}
+
+function getDetail(id) {
+    window.location.href = `detail.htm?id=${id}`
 }
 
 function renderStats() {
     productCount.innerHTML = data.length
+
     let total = 0
+
     for (let i = 0; i < data.length; i++) {
         total += Number(data[i].price) * Number(data[i].num)
     }
+
     totalValue.innerHTML = total + ' AZN'
-}
-
-function showDetail(id) {
-    let mehsul = data.find(item => item.id == id)
-    if (!mehsul) return
-    drawer.classList.add('show')
-    overlay.classList.add('show')
-
-    drawerTitle.innerHTML = mehsul.name
-    drawerImage.src = mehsul.photo
-    drawerCategory.innerHTML = mehsul.category
-    drawerPrice.innerHTML = mehsul.price + ' AZN'
-    drawerStock.innerHTML = mehsul.num + ' ədəd'
-    drawerId.innerHTML = mehsul.id
 }
 
 function deletmehsul(event, id) {
     event.stopPropagation()
+
     fetch(`https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar/${id}`, {
         method: 'DELETE'
     })
     .then(res => res.json())
     .then(() => {
-        getProducts()
-        drawer.classList.remove('show')
-        overlay.classList.remove('show')
-        showMessage('Məhsul silindi')
+        fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
+            .then(res => res.json())
+            .then(resData => {
+                data = resData
+                renderProduct(data)
+                renderStats()
+                srchinput.value = ''
+                srccardlist.style.display = 'none'
+                srccardlist.innerHTML = ''
+            })
     })
 }
 
@@ -128,9 +184,7 @@ function addProduct() {
         price.value = ''
         count.value = ''
 
-        modal.classList.remove('show')
-        overlay.classList.remove('show')
-
-        showMessage('Məhsul əlavə edildi')
+        document.getElementById('modal').classList.remove('show')
+        document.getElementById('overlay').classList.remove('show')
     })
 }
