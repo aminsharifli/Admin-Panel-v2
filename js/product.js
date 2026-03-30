@@ -2,18 +2,12 @@ let listcontainer = document.getElementById('productList')
 let productCount = document.getElementById('productCount')
 let totalValue = document.getElementById('totalValue')
 
-let drawerTitle = document.getElementById('drawerTitle')
-let drawerImage = document.getElementById('drawerImage')
-let drawerCategory = document.getElementById('drawerCategory')
-let drawerPrice = document.getElementById('drawerPrice')
-let drawerStock = document.getElementById('drawerStock')
-let drawerId = document.getElementById('drawerId')
-
 let srchinput = document.getElementById('srchinput')
 let srccardlist = document.getElementById('srccardlist')
 
 let data = []
 let secilenCategory = 'Hamısı'
+let problemliler = []
 
 function getProducts() {
     fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
@@ -26,15 +20,18 @@ function getProducts() {
 }
 
 function renderProduct(arr) {
+    if (!listcontainer) return
+
     listcontainer.innerHTML = arr.map(item =>
-        `<div class="table-row" onclick="getDetail('${item.id}')">
+        `<div class="table-row ${problemliler.includes(item.id) ? 'problemli' : ''}" onclick="getDetail('${item.id}')">
             <div><img src="${item.photo}" alt=""></div>
             <div>${item.name}</div>
             <div>${item.category}</div>
             <div>${item.num} ədəd</div>
             <div class="price">${item.price} AZN</div>
-            <div>
+            <div style="display:flex; gap:6px;">
                 <button class="delete-btn" onclick="deletmehsul(event,'${item.id}')">Sil</button>
+                <button class="problem-btn" onclick="problemEt(event,'${item.id}')">⚠</button>
             </div>
         </div>`
     ).join('')
@@ -49,42 +46,54 @@ function filtrProduct(name, btn) {
         butonlar[i].classList.remove('active')
     }
 
-    if (btn) {
-        btn.classList.add('active')
-    }
+    if (btn) btn.classList.add('active')
 
-    let axtarisSozu = srchinput.value.toLowerCase()
+    let soz = ''
+    if (srchinput) soz = srchinput.value.toLowerCase()
 
     let filterdata = data.filter(item => {
         let categoryUyur = name === 'Hamısı' ? true : item.category === name
-        let searchUyur = item.name.toLowerCase().includes(axtarisSozu)
-
+        let searchUyur = item.name.toLowerCase().includes(soz)
         return categoryUyur && searchUyur
     })
 
     renderProduct(filterdata)
     SrcCardData(filterdata)
 
-    axtarisSozu === '' ? srccardlist.style.display = 'none' : srccardlist.style.display = 'block'
+    if (srccardlist) {
+        if (soz === '') srccardlist.style.display = 'none'
+        else srccardlist.style.display = 'block'
+    }
 }
 
-srchinput.addEventListener('input', function (e) {
-    let keyword = e.target.value.toLowerCase()
+if (srchinput) {
+    srchinput.addEventListener('input', function (e) {
+        let keyword = e.target.value.toLowerCase()
 
-    let filterdata = data.filter(item => {
-        let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
-        let searchUyur = item.name.toLowerCase().includes(keyword)
+        let filterdata = data.filter(item => {
+            let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
+            let searchUyur = item.name.toLowerCase().includes(keyword)
+            return categoryUyur && searchUyur
+        })
 
-        return categoryUyur && searchUyur
+        renderProduct(filterdata)
+        SrcCardData(filterdata)
+
+        if (!srccardlist) return
+
+        if (e.target.value === '') srccardlist.style.display = 'none'
+        else srccardlist.style.display = 'block'
     })
-
-    renderProduct(filterdata)
-    SrcCardData(filterdata)
-
-    e.target.value === '' ? srccardlist.style.display = 'none' : srccardlist.style.display = 'block'
-})
+}
 
 function SrcCardData(arr) {
+    if (!srccardlist) return
+
+    if (arr.length === 0) {
+        srccardlist.innerHTML = `<div class="notfound">Məhsul tapılmadı</div>`
+        return
+    }
+
     srccardlist.innerHTML = arr.map(item =>
         `<div onclick="srcGetDetail('${item.id}')" class="srchcards">
             <img src="${item.photo}" class="srcimg" alt="">
@@ -94,10 +103,6 @@ function SrcCardData(arr) {
             </div>
         </div>`
     ).join('')
-
-    if (arr.length === 0) {
-        srccardlist.innerHTML = `<div class="notfound">Məhsul tapılmadı</div>`
-    }
 }
 
 function srcGetDetail(id) {
@@ -109,15 +114,14 @@ function getDetail(id) {
 }
 
 function renderStats() {
-    productCount.innerHTML = data.length
+    if (productCount) productCount.innerHTML = data.length
 
     let total = 0
-
     for (let i = 0; i < data.length; i++) {
-        total += Number(data[i].price) * Number(data[i].num)
+        total += Number(data[i].price)
     }
 
-    totalValue.innerHTML = total + ' AZN'
+    if (totalValue) totalValue.innerHTML = total + ' AZN'
 }
 
 function deletmehsul(event, id) {
@@ -128,16 +132,15 @@ function deletmehsul(event, id) {
     })
     .then(res => res.json())
     .then(() => {
-        fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
-            .then(res => res.json())
-            .then(resData => {
-                data = resData
-                renderProduct(data)
-                renderStats()
-                srchinput.value = ''
-                srccardlist.style.display = 'none'
-                srccardlist.innerHTML = ''
-            })
+        problemliler = problemliler.filter(item => item !== id)
+
+        getProducts()
+
+        if (srchinput) srchinput.value = ''
+        if (srccardlist) {
+            srccardlist.style.display = 'none'
+            srccardlist.innerHTML = ''
+        }
     })
 }
 
@@ -147,6 +150,8 @@ function addProduct() {
     let image = document.getElementById('image')
     let price = document.getElementById('price')
     let count = document.getElementById('stock')
+
+    if (!title || !category || !image || !price || !count) return
 
     if (
         title.value === '' ||
@@ -184,7 +189,72 @@ function addProduct() {
         price.value = ''
         count.value = ''
 
-        document.getElementById('modal').classList.remove('show')
-        document.getElementById('overlay').classList.remove('show')
+        let modal = document.getElementById('modal')
+        let overlay = document.getElementById('overlay')
+
+        if (modal) modal.classList.remove('show')
+        if (overlay) overlay.classList.remove('show')
     })
+}
+
+function problemEt(event, id) {
+    event.stopPropagation()
+
+    if (problemliler.includes(id)) {
+        problemliler = problemliler.filter(item => item !== id)
+    } else {
+        problemliler.push(id)
+    }
+
+    let soz = ''
+    if (srchinput) soz = srchinput.value.toLowerCase()
+
+    let filterdata = data.filter(item => {
+        let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
+        let searchUyur = item.name.toLowerCase().includes(soz)
+        return categoryUyur && searchUyur
+    })
+
+    renderProduct(filterdata)
+    SrcCardData(filterdata)
+
+    if (srccardlist) {
+        if (soz === '') srccardlist.style.display = 'none'
+        else srccardlist.style.display = 'block'
+    }
+}
+
+function problemModalAc() {
+    let problemModal = document.getElementById('problemModal')
+    let overlay = document.getElementById('overlay')
+    let problemList = document.getElementById('problemList')
+
+    if (!problemModal || !overlay || !problemList) return
+
+    let filterdata = data.filter(item => problemliler.includes(item.id))
+
+    if (filterdata.length === 0) {
+        problemList.innerHTML = `<p>Problemli məhsul yoxdur</p>`
+    } else {
+        problemList.innerHTML = filterdata.map(item =>
+            `<div class="problemCard" onclick="srcGetDetail('${item.id}')">
+                <img src="${item.photo}" alt="">
+                <div>
+                    <h4>${item.name}</h4>
+                    <p>${item.price} AZN</p>
+                </div>
+            </div>`
+        ).join('')
+    }
+
+    problemModal.classList.add('show')
+    overlay.classList.add('show')
+}
+
+function problemModalBagla() {
+    let problemModal = document.getElementById('problemModal')
+    let overlay = document.getElementById('overlay')
+
+    if (problemModal) problemModal.classList.remove('show')
+    if (overlay) overlay.classList.remove('show')
 }

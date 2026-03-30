@@ -315,3 +315,136 @@ body {
     background: #2563eb;
     color: white;
 }
+.problem-btn {
+    border: none;
+    background: #facc15;
+    color: #000;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.problem-btn:hover {
+    background: #eab308;
+}
+
+.problemFilterBtn {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.problemFilterBtn:hover {
+    background: #dc2626;
+}
+
+/* PROBLEM STYLE */
+
+.problemli {
+    background: #fff1f2 !important;
+    border-left: 5px solid #ef4444;
+}
+
+/* biraz glow */
+.problemli:hover {
+    background: #ffe4e6 !important;
+}
+.ustbtns {
+    display: flex;
+    gap: 10px;
+}
+
+.problemBtn {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.problemli {
+    background: #fff1f2 !important;
+    border-left: 5px solid #ef4444;
+}
+
+.problemList {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.problemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.problemCard img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.problem-btn {
+    border: none;
+    background: #facc15;
+    color: black;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.problemModalBox {
+    width: 520px;
+    max-height: 80vh;
+}
+
+.problemList {
+    max-height: 60vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.problemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f8fafc;
+    cursor: pointer;
+}
+
+.problemCard:hover {
+    background: #f1f5f9;
+}
+
+.problemCard img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.problemCard h4 {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.problemCard p {
+    color: #16a34a;
+    font-weight: 600;
+}
