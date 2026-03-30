@@ -323,11 +323,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
-
-.problem-btn:hover {
-    background: #eab308;
-}
-
+.problem-btn:hover {background: #eab308;}
 .problemFilterBtn {
     border: none;
     background: #ef4444;
@@ -336,27 +332,16 @@ body {
     border-radius: 10px;
     cursor: pointer;
 }
-
-.problemFilterBtn:hover {
-    background: #dc2626;
-}
-
-/* PROBLEM STYLE */
-
+.problemFilterBtn:hover {background: #dc2626;}
 .problemli {
     background: #fff1f2 !important;
     border-left: 5px solid #ef4444;
 }
-
-/* biraz glow */
-.problemli:hover {
-    background: #ffe4e6 !important;
-}
+.problemli:hover {background: #ffe4e6 !important;}
 .ustbtns {
     display: flex;
     gap: 10px;
 }
-
 .problemBtn {
     border: none;
     background: #ef4444;
@@ -365,12 +350,10 @@ body {
     border-radius: 12px;
     cursor: pointer;
 }
-
 .problemli {
     background: #fff1f2 !important;
     border-left: 5px solid #ef4444;
 }
-
 .problemList {
     max-height: 400px;
     overflow-y: auto;
@@ -378,7 +361,6 @@ body {
     flex-direction: column;
     gap: 10px;
 }
-
 .problemCard {
     display: flex;
     align-items: center;
@@ -388,14 +370,12 @@ body {
     border-radius: 12px;
     background: #f8fafc;
 }
-
 .problemCard img {
     width: 60px;
     height: 60px;
     object-fit: cover;
     border-radius: 10px;
 }
-
 .problem-btn {
     border: none;
     background: #facc15;
@@ -408,7 +388,6 @@ body {
     width: 520px;
     max-height: 80vh;
 }
-
 .problemList {
     max-height: 60vh;
     overflow-y: auto;
@@ -416,7 +395,6 @@ body {
     flex-direction: column;
     gap: 10px;
 }
-
 .problemCard {
     display: flex;
     align-items: center;
@@ -427,23 +405,17 @@ body {
     background: #f8fafc;
     cursor: pointer;
 }
-
-.problemCard:hover {
-    background: #f1f5f9;
-}
-
+.problemCard:hover {background: #f1f5f9;}
 .problemCard img {
     width: 60px;
     height: 60px;
     object-fit: cover;
     border-radius: 10px;
 }
-
 .problemCard h4 {
     font-size: 16px;
     margin-bottom: 4px;
 }
-
 .problemCard p {
     color: #16a34a;
     font-weight: 600;

@@ -8,11 +8,9 @@
 </head>
 <body>
     <div class="panel">
-
         <div class="sol">
             <div>
                 <h1 class="logo">Admin Panel</h1>
-
                 <ul class="menu">
                     <li class="menu-item">İdarə paneli</li>
                     <li class="menu-item">Sifarişlər</li>
@@ -24,51 +22,41 @@
                     <li class="menu-item">Tənzimləmələr</li>
                 </ul>
             </div>
-
             <div class="profil">
                 <img src="https://ui-avatars.com/api/?name=Amin+Sharifli&background=2563eb&color=fff" alt="Amin">
                 <span>Amin Sharifli</span>
             </div>
         </div>
-
         <div class="sag">
             <div class="ust">
                 <h2>Anbar</h2>
-
                 <div class="ustbtns">
                     <button onclick="problemModalAc()" class="problemBtn">Problemli mallar</button>
                     <button id="openModal" class="elaveBtn">+ Məhsul əlavə et</button>
                 </div>
             </div>
-
             <div class="kartlar">
                 <div class="kart">
                     <h3 id="productCount">0</h3>
                     <p>Məhsul sayı</p>
                 </div>
-
                 <div class="kart">
                     <h3 id="totalValue">0 AZN</h3>
                     <p>Ümumi dəyər</p>
                 </div>
-
                 <div class="kart">
                     <h3 id="categoryCount">0</h3>
                     <p>Kateqoriya sayı</p>
                 </div>
             </div>
-
             <div class="search-box">
                 <input id="srchinput" type="text" placeholder="Məhsul axtar">
                 <div id="srccardlist" class="srccardlist"></div>
             </div>
-
             <div class="filter">
                 <div id="categoryButtons" class="catlist"></div>
             </div>
-
             <div id="successMessage" class="mesaj"></div>
-
             <div class="cedvel">
                 <div class="cedvel-head">
                     <div>Şəkil</div>
@@ -78,52 +66,41 @@
                     <div>Qiymət</div>
                     <div>Əməliyyat</div>
                 </div>
-
                 <div id="productList" class="cedvel-body"></div>
             </div>
         </div>
     </div>
-
     <div id="overlay" class="overlay"></div>
-
     <div id="modal" class="modal">
         <div class="modalBox">
             <div class="modalTop">
                 <h3>Məhsul əlavə et</h3>
                 <button id="closeModal" class="baglaBtn">✕</button>
             </div>
-
             <input id="title" type="text" placeholder="Məhsulun adı">
-
             <select id="category">
                 <option value="">Kateqoriya seç</option>
             </select>
-
             <input id="image" type="text" placeholder="Şəkil URL">
             <input id="price" type="number" placeholder="Qiymət">
             <input id="stock" type="number" placeholder="Say">
-
             <button id="addProductBtn" class="saveBtn">Əlavə et</button>
         </div>
     </div>
-
     <div id="problemModal" class="modal">
         <div class="modalBox problemModalBox">
             <div class="modalTop">
                 <h3>Problemli məhsullar</h3>
                 <button onclick="problemModalBagla()" class="baglaBtn">✕</button>
             </div>
-
             <div id="problemList" class="problemList"></div>
         </div>
     </div>
-
     <div id="productDrawer" class="detail">
         <div class="detailTop">
             <h3>Məhsul haqqında</h3>
             <button id="closeDrawer" class="baglaBtn">✕</button>
         </div>
-
         <p>Bu hissə hazırda istifadə olunmur.</p>
     </div>
 
