@@ -1,7 +1,7 @@
 let listcontainer = document.getElementById('productList')
 let productCount = document.getElementById('productCount')
 let totalValue = document.getElementById('totalValue')
-
+let problemCount = document.getElementById('problemCount')
 let srchinput = document.getElementById('srchinput')
 let srccardlist = document.getElementById('srccardlist')
 
@@ -114,14 +114,8 @@ function getDetail(id) {
 }
 
 function renderStats() {
-    if (productCount) productCount.innerHTML = data.length
-
-    let total = 0
-    for (let i = 0; i < data.length; i++) {
-        total += Number(data[i].price)
-    }
-
-    if (totalValue) totalValue.innerHTML = total + ' AZN'
+    productCount.innerHTML = data.length
+    problemCount.innerHTML = problemliler.length
 }
 
 function deletmehsul(event, id) {
@@ -217,6 +211,7 @@ function problemEt(event, id) {
 
     renderProduct(filterdata)
     SrcCardData(filterdata)
+    renderStats()
 
     if (srccardlist) {
         if (soz === '') srccardlist.style.display = 'none'

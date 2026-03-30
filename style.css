@@ -420,3 +420,85 @@ body {
     color: #16a34a;
     font-weight: 600;
 }
+.ustbtns {
+    display: flex;
+    gap: 10px;
+}
+.problemBtn {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.catTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.catAddBtn {
+    border: none;
+    background: #2563eb;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+.problemModalBox {
+    width: 520px;
+    max-height: 80vh;
+}
+.problemList {
+    max-height: 60vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.problemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f8fafc;
+    cursor: pointer;
+}
+.problemCard:hover {background: #f1f5f9;}
+.problemCard img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.catItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.catDelete {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: 0.2s;
+}
+.catItem:hover .catDelete {
+    opacity: 1;
+    transform: scale(1);
+}
