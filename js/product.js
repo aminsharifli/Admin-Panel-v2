@@ -9,6 +9,16 @@ let data = []
 let secilenCategory = 'Hamısı'
 let problemliler = []
 
+
+function createSlug(title) {
+    return title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+}
+
 function getProducts() {
     fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
         .then(res => res.json())
@@ -37,6 +47,18 @@ function renderProduct(arr) {
     ).join('')
 }
 
+function getCategoryData() {
+    return data.filter(item => {
+        return secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
+    })
+}
+
+function getSearchData(keyword) {
+    return getCategoryData().filter(item => {
+        return item.name.toLowerCase().includes(keyword)
+    })
+}
+
 function filtrProduct(name, btn) {
     secilenCategory = name
 
@@ -48,41 +70,35 @@ function filtrProduct(name, btn) {
 
     if (btn) btn.classList.add('active')
 
+    renderProduct(getCategoryData())
+
     let soz = ''
-    if (srchinput) soz = srchinput.value.toLowerCase()
+    if (srchinput) soz = srchinput.value.toLowerCase().trim()
 
-    let filterdata = data.filter(item => {
-        let categoryUyur = name === 'Hamısı' ? true : item.category === name
-        let searchUyur = item.name.toLowerCase().includes(soz)
-        return categoryUyur && searchUyur
-    })
+    if (!srccardlist) return
 
-    renderProduct(filterdata)
-    SrcCardData(filterdata)
-
-    if (srccardlist) {
-        if (soz === '') srccardlist.style.display = 'none'
-        else srccardlist.style.display = 'block'
+    if (soz === '') {
+        srccardlist.style.display = 'none'
+        srccardlist.innerHTML = ''
+    } else {
+        srccardlist.style.display = 'block'
+        SrcCardData(getSearchData(soz))
     }
 }
 
 if (srchinput) {
     srchinput.addEventListener('input', function (e) {
-        let keyword = e.target.value.toLowerCase()
-
-        let filterdata = data.filter(item => {
-            let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
-            let searchUyur = item.name.toLowerCase().includes(keyword)
-            return categoryUyur && searchUyur
-        })
-
-        renderProduct(filterdata)
-        SrcCardData(filterdata)
+        let keyword = e.target.value.toLowerCase().trim()
 
         if (!srccardlist) return
 
-        if (e.target.value === '') srccardlist.style.display = 'none'
-        else srccardlist.style.display = 'block'
+        if (keyword === '') {
+            srccardlist.style.display = 'none'
+            srccardlist.innerHTML = ''
+        } else {
+            srccardlist.style.display = 'block'
+            SrcCardData(getSearchData(keyword))
+        }
     })
 }
 
@@ -106,11 +122,19 @@ function SrcCardData(arr) {
 }
 
 function srcGetDetail(id) {
-    window.location.href = `detail.htm?id=${id}`
+    let product = data.find(item => item.id === id)
+    if (!product) return
+
+    let slug = createSlug(product.name)
+    window.location.href = `detail.htm?slug=${encodeURIComponent(slug)}`
 }
 
 function getDetail(id) {
-    window.location.href = `detail.htm?id=${id}`
+    let product = data.find(item => item.id === id)
+    if (!product) return
+
+    let slug = createSlug(product.name)
+    window.location.href = `detail.htm?slug=${encodeURIComponent(slug)}`
 }
 
 function renderStats() {
@@ -200,22 +224,20 @@ function problemEt(event, id) {
         problemliler.push(id)
     }
 
-    let soz = ''
-    if (srchinput) soz = srchinput.value.toLowerCase()
-
-    let filterdata = data.filter(item => {
-        let categoryUyur = secilenCategory === 'Hamısı' ? true : item.category === secilenCategory
-        let searchUyur = item.name.toLowerCase().includes(soz)
-        return categoryUyur && searchUyur
-    })
-
-    renderProduct(filterdata)
-    SrcCardData(filterdata)
+    renderProduct(getCategoryData())
     renderStats()
 
+    let soz = ''
+    if (srchinput) soz = srchinput.value.toLowerCase().trim()
+
     if (srccardlist) {
-        if (soz === '') srccardlist.style.display = 'none'
-        else srccardlist.style.display = 'block'
+        if (soz === '') {
+            srccardlist.style.display = 'none'
+            srccardlist.innerHTML = ''
+        } else {
+            srccardlist.style.display = 'block'
+            SrcCardData(getSearchData(soz))
+        }
     }
 }
 

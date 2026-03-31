@@ -4,6 +4,16 @@ let srchinput = document.getElementById('srchinput')
 let srccardlist = document.getElementById('srccardlist')
 let data = []
 
+
+function createSlug(title) {
+    return title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+}
+
 fetch('https://69c261047518bf8facbe280c.mockapi.io/admin-panel/mehsullar')
     .then(res => res.json())
     .then(resData => {
@@ -58,11 +68,19 @@ function SrcCardData(arr) {
 }
 
 function srcGetDetail(id) {
-    window.location.href = `detail.htm?id=${id}`
+    let product = data.find(item => item.id === id)
+    if (!product) return
+
+    let slug = createSlug(product.name)
+    window.location.href = `detail.htm?slug=${encodeURIComponent(slug)}`
 }
 
 function getDetail(id) {
-    window.location.href = `detail.htm?id=${id}`
+    let product = data.find(item => item.id === id)
+    if (!product) return
+
+    let slug = createSlug(product.name)
+    window.location.href = `detail.htm?slug=${encodeURIComponent(slug)}`
 }
 
 function statlariYaz() {
